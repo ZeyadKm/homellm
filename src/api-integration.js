@@ -3,7 +3,7 @@
 
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages';
 const ANTHROPIC_VERSION = '2023-06-01';
-const MODEL = 'claude-3-5-sonnet-20241022'; // Latest Sonnet model
+const MODEL = 'claude-sonnet-4-5-20250929'; // Claude Sonnet 4.5 - Latest model
 
 // Validate API key format
 export function validateApiKey(apiKey) {
