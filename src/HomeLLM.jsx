@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Send, FileText, AlertCircle, CheckCircle, Loader2, Copy, Download, Droplet, Shield, FileCheck, Mail, Upload, X, Eye, EyeOff, Save, Clock, ExternalLink, Search } from 'lucide-react';
-import { getRelevantRegulations, issueTypeMapping } from './regulatory-knowledge-base.js';
-import { systemPrompt, generateEmailPrompt, generateDocumentAnalysisPrompt, generateSubjectLine } from './email-prompt-engine.js';
-import * as API from './api-integration.js';
-import * as WebVerify from './web-verification.js';
+import { getRelevantRegulations, issueTypeMapping } from './regulatory-knowledge-base';
+import { systemPrompt, generateEmailPrompt, generateDocumentAnalysisPrompt, generateSubjectLine } from './email-prompt-engine';
+import * as API from './api-integration';
+import * as WebVerify from './web-verification';
 
 export default function HomeLLM() {
   const [activeTab, setActiveTab] = useState('email');

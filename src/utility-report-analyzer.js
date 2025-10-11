@@ -1,7 +1,7 @@
 // Utility Report Analyzer for HomeLLM
 // Automatically fetches, analyzes, and compares utility company reports (water quality, energy efficiency, etc.)
 
-import * as API from './api-integration.js';
+import * as API from './api-integration';
 
 // Major utility company report databases
 export const utilityReportSources = {

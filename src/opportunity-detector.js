@@ -2,10 +2,10 @@
 // Proactively identifies money-saving opportunities, unclaimed benefits, and actionable improvements
 // Combines all analysis modules to find hidden value
 
-import * as UtilityAnalyzer from './utility-report-analyzer.js';
-import * as BenefitsEngine from './benefits-discovery-engine.js';
-import * as ClaimAssistant from './automated-claim-assistant.js';
-import * as API from './api-integration.js';
+import * as UtilityAnalyzer from './utility-report-analyzer';
+import * as BenefitsEngine from './benefits-discovery-engine';
+import * as ClaimAssistant from './automated-claim-assistant';
+import * as API from './api-integration';
 
 // Comprehensive opportunity scan
 export async function scanAllOpportunities(apiKey, customerProfile) {

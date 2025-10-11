@@ -2,7 +2,7 @@
 // Automatically discovers and helps claim benefits from warranties, insurance, HOA, and government programs
 // Similar to DoNotPay's benefits finder
 
-import * as API from './api-integration.js';
+import * as API from './api-integration';
 
 // Comprehensive benefits categories
 export const benefitsCategories = {

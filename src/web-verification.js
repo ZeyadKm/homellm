@@ -1,7 +1,7 @@
 // Web Verification Module for HomeLLM
 // Conducts real-time web searches to verify regulatory codes and standards
 
-import * as API from './api-integration.js';
+import * as API from './api-integration';
 
 // Search for current regulatory standards using web search
 export async function verifyRegulations(apiKey, issueType, state, city) {

@@ -1,7 +1,7 @@
 // Email Generation Prompt Engine for HomeLLM
 // Constructs specialized prompts for Claude API based on issue type, recipient, and escalation level
 
-import { getRelevantRegulations, issueTypeMapping } from './regulatory-knowledge-base.js';
+import { getRelevantRegulations, issueTypeMapping } from './regulatory-knowledge-base';
 
 // System prompt with expert persona
 export const systemPrompt = `You are an expert legal and environmental health advocate who specializes in drafting professional correspondence to address home health and safety issues. You have deep expertise in:

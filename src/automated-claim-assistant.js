@@ -2,7 +2,7 @@
 // Helps customers file claims and applications for warranties, insurance, rebates, and government programs
 // Similar to DoNotPay's automated claim filing
 
-import * as API from './api-integration.js';
+import * as API from './api-integration';
 
 // Generate home warranty claim
 export async function generateWarrantyClaim(apiKey, claimData) {
