@@ -86,7 +86,7 @@ export const regulatoryKnowledgeBase = {
       agencies: ['EPA', 'OSHA', 'HUD', 'State Health Departments'],
       citations: {
         leadDisclosure: '24 CFR Part 35 - Lead-Based Paint Poisoning Prevention',
-        radonGuidance: 'EPA Consumer's Guide to Radon Reduction',
+        radonGuidance: 'EPA Consumer Guide to Radon Reduction',
         asbestosRegulations: '40 CFR Part 61, Subpart M (NESHAP)',
         leadDustStandard: 'EPA Lead Dust Hazard Standards 2020 (40 CFR Part 745)'
       }
