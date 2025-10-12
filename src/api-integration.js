@@ -25,24 +25,36 @@ export async function generateEmail(apiKey, systemPrompt, userPrompt, images = [
     throw new Error(validation.error);
   }
 
-  // Build message content with text and images
+  // Build message content with text, images, and PDFs
   const content = [];
 
-  // Add images first if any
+  // Add documents (images or PDFs) first if any
   if (images && images.length > 0) {
-    images.forEach(image => {
+    images.forEach(doc => {
       // Extract base64 data from data URL
-      const base64Data = image.data.split(',')[1];
-      const mediaType = image.type || 'image/jpeg';
+      const base64Data = doc.data.split(',')[1];
+      const mediaType = doc.type || 'image/jpeg';
 
-      content.push({
-        type: 'image',
-        source: {
-          type: 'base64',
-          media_type: mediaType,
-          data: base64Data
-        }
-      });
+      // Check if it's a PDF or image
+      if (mediaType === 'application/pdf') {
+        content.push({
+          type: 'document',
+          source: {
+            type: 'base64',
+            media_type: 'application/pdf',
+            data: base64Data
+          }
+        });
+      } else {
+        content.push({
+          type: 'image',
+          source: {
+            type: 'base64',
+            media_type: mediaType,
+            data: base64Data
+          }
+        });
+      }
     });
   }
 

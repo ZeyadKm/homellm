@@ -363,13 +363,22 @@ export default function HomeLLM() {
   const handleWaterReportUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Check file size (max 32MB for PDFs, 5MB for images)
+      const maxSize = file.type === 'application/pdf' ? 32 * 1024 * 1024 : 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setError(`File too large. Maximum size: ${file.type === 'application/pdf' ? '32MB' : '5MB'}`);
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         setWaterReport({
           name: file.name,
           data: event.target.result,
-          type: file.type
+          type: file.type,
+          size: file.size
         });
+        setError(''); // Clear any previous errors
       };
       reader.readAsDataURL(file);
     }
@@ -393,16 +402,20 @@ export default function HomeLLM() {
 
     try {
       // Generate analysis prompt
-      const analysisPrompt = generateDocumentAnalysisPrompt('waterReport', 'See attached water quality report image');
+      const documentTypeDesc = waterReport.type === 'application/pdf'
+        ? 'See attached water quality report PDF'
+        : 'See attached water quality report image';
+      const analysisPrompt = generateDocumentAnalysisPrompt('waterReport', documentTypeDesc);
 
-      // Analyze the document with vision
+      // Analyze the document with vision/PDF support
       const systemPrompt = 'You are an expert water quality analyst with deep knowledge of EPA drinking water standards, state regulations, and health effects of water contaminants.';
 
+      // Claude API supports both images and PDFs
       const result = await API.analyzeDocument(
         apiKey,
         systemPrompt,
         analysisPrompt,
-        waterReport.type.startsWith('image/') ? [waterReport] : []
+        [waterReport] // Send document regardless of type
       );
 
       if (result.success) {
@@ -421,13 +434,22 @@ export default function HomeLLM() {
   const handleWarrantyUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Check file size (max 32MB for PDFs, 5MB for images)
+      const maxSize = file.type === 'application/pdf' ? 32 * 1024 * 1024 : 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setError(`File too large. Maximum size: ${file.type === 'application/pdf' ? '32MB' : '5MB'}`);
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         setWarrantyDoc({
           name: file.name,
           data: event.target.result,
-          type: file.type
+          type: file.type,
+          size: file.size
         });
+        setError(''); // Clear any previous errors
       };
       reader.readAsDataURL(file);
     }
@@ -451,16 +473,20 @@ export default function HomeLLM() {
 
     try {
       // Generate analysis prompt
-      const analysisPrompt = generateDocumentAnalysisPrompt('warranty', 'See attached warranty document image');
+      const documentTypeDesc = warrantyDoc.type === 'application/pdf'
+        ? 'See attached warranty document PDF'
+        : 'See attached warranty document image';
+      const analysisPrompt = generateDocumentAnalysisPrompt('warranty', documentTypeDesc);
 
-      // Analyze the document with vision
+      // Analyze the document with vision/PDF support
       const systemPrompt = 'You are an expert in consumer warranty law and product warranties with knowledge of consumer protection rights, implied warranties, and claim procedures.';
 
+      // Claude API supports both images and PDFs
       const result = await API.analyzeDocument(
         apiKey,
         systemPrompt,
         analysisPrompt,
-        warrantyDoc.type.startsWith('image/') ? [warrantyDoc] : []
+        [warrantyDoc] // Send document regardless of type
       );
 
       if (result.success) {
@@ -1147,6 +1173,9 @@ export default function HomeLLM() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Upload Water Quality Report
                   </label>
+                  <p className="text-xs text-gray-500 mb-2">
+                    Supports PDF files (max 32MB) and images (JPG, PNG - max 5MB)
+                  </p>
                   <input
                     type="file"
                     accept="image/*,.pdf"
@@ -1216,6 +1245,9 @@ export default function HomeLLM() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Upload Warranty Document
                   </label>
+                  <p className="text-xs text-gray-500 mb-2">
+                    Supports PDF files (max 32MB) and images (JPG, PNG - max 5MB)
+                  </p>
                   <input
                     type="file"
                     accept="image/*,.pdf"
