@@ -389,24 +389,18 @@ export default function HomeLLM() {
 
     setIsAnalyzingWater(true);
     setError('');
+    setWaterAnalysis(null);
 
     try {
-      // If image, extract text first
-      let documentText = '';
-      if (waterReport.type.startsWith('image/')) {
-        const extractResult = await API.analyzeImageDocument(apiKey, waterReport, 'water quality report');
-        if (extractResult.success) {
-          documentText = extractResult.extractedText;
-        } else {
-          throw new Error(extractResult.error);
-        }
-      }
+      // Generate analysis prompt
+      const analysisPrompt = generateDocumentAnalysisPrompt('waterReport', 'See attached water quality report image');
 
-      // Analyze the document
-      const analysisPrompt = generateDocumentAnalysisPrompt('waterReport', documentText || 'See attached image');
+      // Analyze the document with vision
+      const systemPrompt = 'You are an expert water quality analyst with deep knowledge of EPA drinking water standards, state regulations, and health effects of water contaminants.';
+
       const result = await API.analyzeDocument(
         apiKey,
-        'You are an expert water quality analyst.',
+        systemPrompt,
         analysisPrompt,
         waterReport.type.startsWith('image/') ? [waterReport] : []
       );
@@ -453,22 +447,18 @@ export default function HomeLLM() {
 
     setIsAnalyzingWarranty(true);
     setError('');
+    setWarrantyAnalysis(null);
 
     try {
-      let documentText = '';
-      if (warrantyDoc.type.startsWith('image/')) {
-        const extractResult = await API.analyzeImageDocument(apiKey, warrantyDoc, 'warranty document');
-        if (extractResult.success) {
-          documentText = extractResult.extractedText;
-        } else {
-          throw new Error(extractResult.error);
-        }
-      }
+      // Generate analysis prompt
+      const analysisPrompt = generateDocumentAnalysisPrompt('warranty', 'See attached warranty document image');
 
-      const analysisPrompt = generateDocumentAnalysisPrompt('warranty', documentText || 'See attached image');
+      // Analyze the document with vision
+      const systemPrompt = 'You are an expert in consumer warranty law and product warranties with knowledge of consumer protection rights, implied warranties, and claim procedures.';
+
       const result = await API.analyzeDocument(
         apiKey,
-        'You are an expert in consumer warranty law.',
+        systemPrompt,
         analysisPrompt,
         warrantyDoc.type.startsWith('image/') ? [warrantyDoc] : []
       );
