@@ -10,12 +10,12 @@ coverage
 dist
 build
 
+# Environment Variables
+.env
+.env*.local
+
 # Misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 # Logs
 npm-debug.log*
@@ -27,6 +27,7 @@ lerna-debug.log*
 # Editor
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 *.swp
 *.swo
@@ -34,3 +35,8 @@ lerna-debug.log*
 
 # OS
 Thumbs.db
+*.iml
+
+# Vite
+*.local
+.cache
